@@ -5,6 +5,8 @@ export async function analyzeProgress(input: {
   completedTasks: number;
   totalTasks: number;
 }) {
+    const client = openai;
+  if (!client) return "";
   const prompt = [
     "Сделай краткую сводку прогресса (2-4 предложения) и 1 следующий шаг.",
     "Пиши по-русски, без воды.",
@@ -12,7 +14,7 @@ export async function analyzeProgress(input: {
     `Выполнено задач: ${input.completedTasks}/${input.totalTasks}`
   ].join("\n");
 
-  const res = await openai.responses.create({
+  const res = await client.responses.create({
     model: openaiModel,
     input: prompt
   });
