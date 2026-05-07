@@ -1,7 +1,9 @@
 import { openai, openaiModel } from "../config/openai.js";
 
 export async function decomposeGoal(goalTitle: string, goalDescription?: string) {
-  const prompt = [
+    const client = openai;
+  if (!client) return []
+    const prompt = [
     "Разбей цель на 5-10 конкретных задач (короткие пункты).",
     "Верни строго JSON-массив строк.",
     `Цель: ${goalTitle}`,
@@ -10,7 +12,7 @@ export async function decomposeGoal(goalTitle: string, goalDescription?: string)
     .filter(Boolean)
     .join("\n");
 
-  const res = await openai.responses.create({
+  const res = await client.responses.create({
     model: openaiModel,
     input: prompt
   });
