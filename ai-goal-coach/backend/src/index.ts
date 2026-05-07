@@ -11,7 +11,9 @@ app.get("/health", async (_req, res) => {
     await prisma.$queryRaw`SELECT 1`;
     res.json({ ok: true });
   } catch (e) {
-    res.status(500).json({ ok: false });
+    const message = e instanceof Error ? e.message : String(e);
+console.error("Health DB check failed:", message);
+res.status(500).json({ ok: false, error: message });
   }
 });
 
