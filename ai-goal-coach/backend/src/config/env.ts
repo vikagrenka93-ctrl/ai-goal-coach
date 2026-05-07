@@ -9,7 +9,7 @@ const EnvSchema = z.object({
   PUBLIC_URL: z.string().url().optional(),
   // Webhook path mounted on Express. Keep it stable after setting webhook.
   TELEGRAM_WEBHOOK_PATH: z.string().default("/telegram/webhook"),
- OPENAI_API_KEY: OPENAI_API_KEY: z
+OPENAI_API_KEY: z
   .preprocess((v) => (typeof v === "string" ? v.trim() : v), z.string().min(1))
   .optional(),
   OPENAI_MODEL: z.string().default("gpt-4.1-mini"),
