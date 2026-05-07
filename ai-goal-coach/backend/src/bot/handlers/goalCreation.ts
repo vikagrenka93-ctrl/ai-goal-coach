@@ -24,7 +24,11 @@ export async function handleGoalCreationText(ctx: Context) {
   const s = getSession(ctx);
   if (!s.pendingGoalTitle) return;
 
-  const title = "text" in ctx.message ? ctx.message.text.trim() : "";
+  const msg = (ctx as unknown as { message?: unknown }).message;
+  const title =
+    msg && typeof msg === "object" && msg !== null && "text" in msg && typeof (msg as any).text === "string"
+      ? (msg as any).text.trim()
+      : "";
   if (!title) return ctx.reply("Не вижу текст. Напиши название цели.");
 
   const telegramId = String(ctx.from?.id ?? "");
